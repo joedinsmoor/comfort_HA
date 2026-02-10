@@ -61,10 +61,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
     # Set up platforms
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    await hass.async_add_executor_job(test_code, "teehee")
 
     return True
 
+def test_code():
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
